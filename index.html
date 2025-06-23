@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M-Pesa Payment Portal | Business Owner</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Login Section -->
+        <section class="login-section" id="loginSection">
+            <div class="logo">
+                <i class="fas fa-money-bill-wave logo-icon"></i>
+                <div class="logo-text">M-Pesa Portal</div>
+            </div>
+
+            <h1 class="login-title">Business Owner Login</h1>
+            <p class="login-subtitle">Securely access your payment dashboard to manage customer transactions</p>
+
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="username">Business ID</label>
+                    <input type="text" id="username" class="form-control" placeholder="Enter your business ID" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                </div>
+
+                <button type="submit" class="btn btn-login">Login to Dashboard</button>
+                <a href="#" class="forgot-password">Forgot Password?</a>
+            </form>
+        </section>
+
+        <!-- Dashboard Section -->
+        <section class="dashboard-section" id="dashboardSection" style="display: none;">
+            <header class="dashboard-header">
+                <div class="user-info">
+                    <div class="user-avatar">BM</div>
+                    <div class="user-details">
+                        <h2>Business Manager</h2>
+                        <p>eccosmart@gmail.com</p>
+                    </div>
+                </div>
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </header>
+
+            <main class="dashboard-content">
+                <h1 class="page-title">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Payment Dashboard
+                </h1>
+
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-user-plus"></i>
+                        New Payment Request
+                    </h2>
+
+                    <form id="paymentForm">
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="input-group">
+                                    <label for="customerName">Customer Name</label>
+                                    <input type="text" id="customerName" class="input-control" placeholder="Enter customer name" required>
+                                </div>
+                            </div>
+
+                            <div class="form-col">
+                                <div class="input-group">
+                                    <label for="customerPhone">Phone Number</label>
+                                    <input type="tel" id="customerPhone" class="input-control" placeholder="2547XXXXXXXXX" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="input-group">
+                                    <label for="paymentAmount">Amount (KES)</label>
+                                    <input type="number" id="paymentAmount" class="input-control" placeholder="Enter amount" min="1" required>
+                                </div>
+                            </div>
+
+                            <div class="form-col">
+                                <div class="input-group">
+                                    <label for="paymentReference">Reference</label>
+                                    <input type="text" id="paymentReference" class="input-control" placeholder="Payment reference" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            Send Payment Request
+                        </button>
+                    </form>
+                </div>
+
+                <div class="card recent-payments">
+                    <h2 class="card-title">
+                        <i class="fas fa-history"></i>
+                        Recent Transactions
+                    </h2>
+                    <div style="margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+                        <input type="text" id="filterName" placeholder="Filter by name" style="padding: 10px; width: 200px;">
+
+                        <select id="filterStatus" style="padding: 10px; width: 180px;">
+                            <option value="">All Statuses</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Failed">Failed</option>
+                        </select>
+                    </div>
+                    <table class="payments-table">
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Phone</th>
+                                <th>Amount</th>
+                                <th>Reference</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Transaction rows will be added here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+
+            <footer class="dashboard-footer">
+                <p>© 2025 M-Pesa Payment Portal | Secure Business Transactions</p>
+            </footer>
+        </section>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+
+</html>
