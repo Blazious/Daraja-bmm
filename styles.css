@@ -492,17 +492,156 @@ body {
     font-size: 0.9rem;
 }
 
-.notification-close:hover {
-    opacity: 1;
+/* Hides modal by default */
+/* Profile Modal Styles */
+.profile-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
-@keyframes slideInRight {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
+/* CRITICAL: Hidden class with higher specificity */
+.profile-modal.hidden {
+    display: none !important;
+}
+
+/* Alternative: Use a more specific selector */
+#profileModal.hidden {
+    display: none !important;
+}
+
+/* Profile Modal Content */
+.profile-modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Close Button */
+.close-profile {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    background: none;
+    border: none;
+    padding: 0;
+    line-height: 1;
+}
+
+.close-profile:hover {
+    color: #000;
+}
+
+/* Profile Photo */
+.profile-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 1rem;
+    border: 3px solid #ddd;
+}
+
+/* Profile Details */
+#profileName {
+    text-align: center;
+    margin: 0.5rem 0;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+#profileEmail,
+#profilePhone {
+    text-align: center;
+    margin: 0.25rem 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Upload Form */
+#uploadForm {
+    text-align: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+#passportPhotoInput {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+}
+
+#uploadForm button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+#uploadForm button:hover {
+    background: #0056b3;
+}
+
+/* User Avatar (clickable) */
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.user-avatar:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .profile-modal-content {
+        padding: 1.5rem;
+        margin: 1rem;
+        max-width: none;
+        width: calc(100% - 2rem);
     }
-    to {
-        transform: translateX(0);
-        opacity: 1;
+    
+    .profile-photo {
+        width: 80px;
+        height: 80px;
+    }
+    
+    #profileName {
+        font-size: 1.3rem;
     }
 }

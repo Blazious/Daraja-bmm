@@ -29,7 +29,8 @@
 
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                    <input type="password" id="password" class="form-control" placeholder="Enter your password"
+                        required>
                 </div>
 
                 <button type="submit" class="btn btn-login">Login to Dashboard</button>
@@ -41,7 +42,8 @@
         <section class="dashboard-section" id="dashboardSection" style="display: none;">
             <header class="dashboard-header">
                 <div class="user-info">
-                    <div class="user-avatar">BM</div>
+                    <div class="user-avatar" id="openProfile">BM</div>
+
                     <div class="user-details">
                         <h2>Business Manager</h2>
                         <p>eccosmart@gmail.com</p>
@@ -52,6 +54,28 @@
                     Logout
                 </button>
             </header>
+
+            <!-- Profile Popup Modal -->
+            <div id="profileModal" class="profile-modal hidden">
+                <div class="profile-modal-content">
+                    <span class="close-profile" id="closeProfile">&times;</span>
+
+                    <!-- Dynamic photo -->
+                    <img src="default.jpg" alt="User Photo" id="profilePhoto" class="profile-photo" />
+
+                    <!-- Dynamic user details -->
+                    <h3 id="profileName">Business Manager</h3>
+                    <p id="profileEmail">eccosmart@gmail.com</p>
+                    <p id="profilePhone">+254 700 000000</p>
+
+                    <!-- Upload Form -->
+                    <form id="uploadForm" enctype="multipart/form-data" style="margin-top: 1rem;">
+                        <input type="file" id="passportPhotoInput" name="passport_photo" accept="image/*" required>
+                        <button type="submit">Upload New Photo</button>
+                    </form>
+                </div>
+            </div>
+
 
             <main class="dashboard-content">
                 <h1 class="page-title">
@@ -70,14 +94,16 @@
                             <div class="form-col">
                                 <div class="input-group">
                                     <label for="customerName">Customer Name</label>
-                                    <input type="text" id="customerName" class="input-control" placeholder="Enter customer name" required>
+                                    <input type="text" id="customerName" class="input-control"
+                                        placeholder="Enter customer name" required>
                                 </div>
                             </div>
 
                             <div class="form-col">
                                 <div class="input-group">
                                     <label for="customerPhone">Phone Number</label>
-                                    <input type="tel" id="customerPhone" class="input-control" placeholder="2547XXXXXXXXX" required>
+                                    <input type="tel" id="customerPhone" class="input-control"
+                                        placeholder="2547XXXXXXXXX" required>
                                 </div>
                             </div>
                         </div>
@@ -86,14 +112,16 @@
                             <div class="form-col">
                                 <div class="input-group">
                                     <label for="paymentAmount">Amount (KES)</label>
-                                    <input type="number" id="paymentAmount" class="input-control" placeholder="Enter amount" min="1" required>
+                                    <input type="number" id="paymentAmount" class="input-control"
+                                        placeholder="Enter amount" min="1" required>
                                 </div>
                             </div>
 
                             <div class="form-col">
                                 <div class="input-group">
                                     <label for="paymentReference">Reference</label>
-                                    <input type="text" id="paymentReference" class="input-control" placeholder="Payment reference" required>
+                                    <input type="text" id="paymentReference" class="input-control"
+                                        placeholder="Payment reference" required>
                                 </div>
                             </div>
                         </div>
@@ -111,7 +139,8 @@
                         Recent Transactions
                     </h2>
                     <div style="margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
-                        <input type="text" id="filterName" placeholder="Filter by name" style="padding: 10px; width: 200px;">
+                        <input type="text" id="filterName" placeholder="Filter by name"
+                            style="padding: 10px; width: 200px;">
 
                         <select id="filterStatus" style="padding: 10px; width: 180px;">
                             <option value="">All Statuses</option>

@@ -45,6 +45,12 @@ loginForm.addEventListener('submit', function(e) {
         updateUserInfo(username);
         showNotification('Login successful! Welcome to your dashboard.', 'success');
         fetchAndRenderPayments();
+        
+        // FIXED: Ensure profile modal is hidden after login
+        const profileModal = document.getElementById('profileModal');
+        if (profileModal) {
+            profileModal.classList.add('hidden');
+        }
     })
     .catch(err => {
         showNotification("Login failed: " + err.message, "error");
@@ -65,6 +71,12 @@ logoutBtn.addEventListener('click', function() {
         localStorage.removeItem("access_token");
         localStorage.removeItem("username");
         showNotification('You have been logged out successfully.', 'info');
+        
+        // FIXED: Ensure profile modal is hidden on logout
+        const profileModal = document.getElementById('profileModal');
+        if (profileModal) {
+            profileModal.classList.add('hidden');
+        }
     }
 });
 
@@ -263,3 +275,125 @@ function clearNotifications() {
     document.querySelectorAll('.notification').forEach(el => el.remove());
 }
 
+// ===== PROFILE POPUP FUNCTIONALITY =====
+document.addEventListener("DOMContentLoaded", () => {
+    const profileModal = document.getElementById('profileModal');
+    const openProfile = document.getElementById('openProfile');
+    const closeProfile = document.getElementById('closeProfile');
+    const profileName = document.getElementById('profileName');
+    const profileEmail = document.getElementById('profileEmail');
+    const profilePhone = document.getElementById('profilePhone');
+    const profilePhoto = document.getElementById('profilePhoto');
+    const profileUploadForm = document.getElementById('uploadForm');
+    const passportPhotoInput = document.getElementById('passportPhotoInput');
+
+    // FIXED: Ensure modal is hidden on page load
+    if (profileModal) {
+        profileModal.classList.add('hidden');
+    }
+
+    // FIXED: Add null checks for elements
+    if (openProfile) {
+        openProfile.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent any default behavior
+            e.stopPropagation(); // Stop event bubbling
+            if (profileModal) {
+                profileModal.classList.remove('hidden');
+                loadUserProfile();
+            }
+        });
+    }
+
+    if (closeProfile) {
+        closeProfile.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (profileModal) {
+                profileModal.classList.add('hidden');
+            }
+        });
+    }
+
+    // Close modal when clicking outside the modal content
+    window.addEventListener('click', (e) => {
+        if (e.target === profileModal) {
+            profileModal.classList.add('hidden');
+        }
+    });
+
+    // FIXED: Added escape key handler
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && profileModal && !profileModal.classList.contains('hidden')) {
+            profileModal.classList.add('hidden');
+        }
+    });
+
+    // Load user profile from backend
+    function loadUserProfile() {
+        const token = localStorage.getItem('access_token');
+        if (!token) {
+            showNotification("Please login to view profile", "error");
+            return;
+        }
+
+        fetch("http://127.0.0.1:8000/api/accounts/profile/", {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then(res => {
+            if (!res.ok) throw new Error("Failed to fetch profile");
+            return res.json();
+        })
+        .then(data => {
+            if (profileName) profileName.textContent = data.username || "User";
+            if (profileEmail) profileEmail.textContent = data.email || "No email";
+            if (profilePhone) profilePhone.textContent = data.phone || "No phone";
+            if (profilePhoto) profilePhoto.src = data.passport_photo || "default.jpg";
+        })
+        .catch(err => {
+            showNotification("Failed to load profile: " + err.message, "error");
+        });
+    }
+
+    // Handle passport photo upload
+    if (profileUploadForm) {
+        profileUploadForm.addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const token = localStorage.getItem("access_token");
+            if (!token) {
+                showNotification("Please login first", "error");
+                return;
+            }
+
+            const file = passportPhotoInput ? passportPhotoInput.files[0] : null;
+            if (!file) {
+                showNotification("Please select a photo to upload", "error");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("passport_photo", file);
+
+            fetch("http://127.0.0.1:8000/api/accounts/profile/", {
+                method: "PATCH",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                body: formData
+            })
+            .then(res => {
+                if (!res.ok) throw new Error("Upload failed");
+                return res.json();
+            })
+            .then(data => {
+                showNotification("Photo updated successfully!", "success");
+                if (profilePhoto) profilePhoto.src = data.passport_photo;
+                if (passportPhotoInput) passportPhotoInput.value = '';
+            })
+            .catch(err => {
+                showNotification("Failed to upload photo: " + err.message, "error");
+            });
+        });
+    }
+});
